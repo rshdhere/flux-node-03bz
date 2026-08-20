@@ -10,11 +10,12 @@ export type ChatRoom = {
   id: string;
   name: string;
   description: string;
+  messageCount: number;
 };
 
 type Listener = (message: ChatMessage) => void;
 
-const rooms: ChatRoom[] = [
+const roomDefs: Omit<ChatRoom, "messageCount">[] = [
   {
     id: "general",
     name: "General",
@@ -70,11 +71,15 @@ function createId() {
 }
 
 export function listRooms(): ChatRoom[] {
-  return rooms;
+  return roomDefs.map((room) => ({
+    ...room,
+    messageCount: messages.filter((message) => message.roomId === room.id)
+      .length,
+  }));
 }
 
 export function getRoom(roomId: string): ChatRoom | undefined {
-  return rooms.find((room) => room.id === roomId);
+  return listRooms().find((room) => room.id === roomId);
 }
 
 export function listMessages(roomId: string, afterId?: string): ChatMessage[] {

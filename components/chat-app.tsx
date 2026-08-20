@@ -78,8 +78,13 @@ export function ChatApp() {
     }
 
     void loadRooms();
+    const timer = window.setInterval(() => {
+      void loadRooms();
+    }, 8000);
+
     return () => {
       cancelled = true;
+      window.clearInterval(timer);
     };
   }, []);
 
@@ -282,7 +287,19 @@ export function ChatApp() {
                   type="button"
                   onClick={() => setActiveRoomId(room.id)}
                 >
-                  <span className="font-medium">{room.name}</span>
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="font-medium">{room.name}</span>
+                    <span
+                      className={cn(
+                        "rounded-full px-2 py-0.5 text-[11px] tabular-nums",
+                        active
+                          ? "bg-white/15 text-[var(--text)]"
+                          : "bg-white/5 text-[var(--muted)]",
+                      )}
+                    >
+                      {room.messageCount}
+                    </span>
+                  </span>
                   <span className="mt-0.5 text-xs opacity-80">
                     {room.description}
                   </span>
