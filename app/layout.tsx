@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "flux-node-03bz",
-  description: "make me a chat-app using nextjs",
+  title: "Flux Chat",
+  description: "A live multi-room chat app built with Next.js",
 };
 
 export default function RootLayout({
